@@ -66,7 +66,7 @@ package utils.bitmap
 			}
 		}
 		
-		public function draw(xP:int,yP:int,DrawTo:BitmapData,drawAmount:int,maxSpeed:Number,minSpeed:Number):void {
+		public function draw(xP:int,yP:int,systemRotation:Number,DrawTo:BitmapData,drawAmount:int,maxSpeed:Number,minSpeed:Number):void {
 			//blur(8,8,2);
 			
 			for (var i:int = 0; i < particles.length - 1; i++) {
@@ -76,17 +76,20 @@ package utils.bitmap
 				}else {
 					var alfa:Number = particles[i].lifeTime / particles[i].startLifeTime;
 					//trace(alfa);
-					colorfilt(alfa)
+					//colorfilt(alfa)
 					var mat:Matrix = new Matrix();
 					//mat.scale(0.5+Math.random(),0.5+Math.random());
-					mat.translate(particles[i].xP - 10, particles[i].yP - 10);
+					//mat.rotate(systemRotation );
+					mat.translate( -bitmapDataP1.width/2, -bitmapDataP1.width/2);
+					mat.rotate(particles[i].rotation + (90 / 180 * Math.PI));
+					mat.translate(particles[i].xP , particles[i].yP );
 					DrawTo.draw(bitmapP1,mat);
 				}
 			}
 			
 			for (var j:int = 0; j < drawAmount; j++) 
 			{
-				particles.push(new particle(xP, yP, Random.rangePosNum(maxSpeed,maxSpeed), (Math.random() * 2*Math.PI), Math.random()*10 + 10,0.99));
+				particles.push(new particle(xP, yP, Random.rangePosNum(maxSpeed,maxSpeed), systemRotation+Random.rangePosNum(-0.5,0.5) , 3,0.99));
 			}
 		}
 	}

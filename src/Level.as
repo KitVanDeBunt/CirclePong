@@ -29,7 +29,7 @@ package
 		
 		private var fieldRadius:int = 250;
 		private var shieldRadius:int = 100;
-		private var ballRadius:int = 20;
+		private var ballRadius:int = 25;
 		
 		public static var centerPoint:Vector2D;
 		
@@ -61,7 +61,7 @@ package
 			player1 = new Player1(fieldRadius,shieldRadius);
 			player2 = new Player2(fieldRadius,shieldRadius);
 			
-			this.y += 50;
+			//this.y += 50;
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			addChild(player1);
 			addChild(player2);
@@ -70,7 +70,7 @@ package
 			player1.rotationZ = 180;
 			player1.y = stage.stageHeight / 2;
 			player2.y = stage.stageHeight / 2;
-			addChild(ball);
+			//addChild(ball);
 			ball.x = stage.stageWidth / 2;
 			ball.y = stage.stageHeight / 2;
 			addEventListener(Event.ENTER_FRAME, loop);
@@ -96,12 +96,13 @@ package
 			player2.MovePlayer(Ikey, Kkey);
 			player1.MovePlayer(Skey, Wkey);
 			//
-			background.drawFire(ball.x, ball.y);
+			background.drawFire(ball.x, ball.y , ball.Velocity.angle);
 			
 			//save positions
 			player1Pos = calcPointOncircle(player1.rotationZ * Math.PI / 180, centerPoint.x, centerPoint.y, fieldRadius+shieldRadius-20);
 			player2Pos = calcPointOncircle(player2.rotationZ * Math.PI / 180, centerPoint.x, centerPoint.y, fieldRadius+shieldRadius-20);
 			ballPos = new Vector2D(ball.x, ball.y);
+			
 			
 			textfield.text =  " p2:  " + ballPos.distance( centerPoint);
 			

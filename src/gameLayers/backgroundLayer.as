@@ -13,7 +13,7 @@ package gameLayers
 	
 	public class backgroundLayer extends Canvas
 	{
-		[Embed(source="../img/part1.png")]
+		[Embed(source="../img/firePart2.png")]
 		private var particle_png:Class;
 		
 		public var fire:ParticleSystem;
@@ -32,10 +32,12 @@ package gameLayers
 			stage.addEventListener(MouseEvent.CLICK, fire.click);
 		}
 		
-		public function drawFire(xPos:int,yPos:int):void {
-			blur(4, 4, 1);
+		public function drawFire(xPos:int, yPos:int, rot:Number):void {
+			canvas.lock();
+			blur(8, 8, 3);
 			//wipe(0xf00557799);
-			fire.draw(xPos, yPos, canvas,3,1.2,0.8);
+			fire.draw(xPos, yPos, rot, canvas, 3, 3.2, 2.8);
+			canvas.unlock();
 		}
 		
 	}
