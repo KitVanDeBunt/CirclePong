@@ -7,6 +7,8 @@ package
 	import flash.geom.Point;
 	import flash.text.TextField;
 	import flash.ui.Keyboard;
+	import gameLayers.backgroundLayer;
+	import utils.Stats;
 	
 	
 	/**
@@ -30,10 +32,6 @@ package
 		private var ballRadius:int = 20;
 		
 		public static var centerPoint:Vector2D;
-		public function Level() 
-		{
-			addEventListener(Event.ADDED_TO_STAGE, init);
-		}
 		
 		private var textfield:TextField = new TextField();
 		private var textfield2:TextField = new TextField();
@@ -43,8 +41,18 @@ package
 		private var bounceCoolDown:int = 0; 
 		private var drawCoolDown:int = 0; 
 		
+		private var background:backgroundLayer = new backgroundLayer();
+		private var status:Stats = new Stats();
+		
+		public function Level() 
+		{
+			addEventListener(Event.ADDED_TO_STAGE, init);
+		}
+		
 		private function init(e:Event):void 
 		{
+			addChild(background);
+			
 			centerPoint = new Vector2D(stage.stageWidth/2, (stage.stageHeight/2) );
 			addChild(textfield);
 			addChild(textfield2);
@@ -74,9 +82,10 @@ package
 			field.graphics.drawCircle(centerPoint.x, centerPoint.y, fieldRadius);
 			graphics.lineStyle(5, 0xff0000);
 			field.graphics.drawCircle(centerPoint.x, centerPoint.y, 5);
-			addChild(field);			
-			addChild(trailDraw);
+			addChild(field);	
 			addChild(hitDraw);
+			addChild(status);
+			
 		}
 		
 		private function loop(e:Event):void 
@@ -86,6 +95,8 @@ package
 			ball.loop();
 			player2.MovePlayer(Ikey, Kkey);
 			player1.MovePlayer(Skey, Wkey);
+			//
+			background.drawFire(ball.x, ball.y);
 			
 			//save positions
 			player1Pos = calcPointOncircle(player1.rotationZ * Math.PI / 180, centerPoint.x, centerPoint.y, fieldRadius+shieldRadius-20);
@@ -122,16 +133,14 @@ package
 				ball.x = centerPoint.x;
 				ball.y = centerPoint.y;
 				hitDraw.graphics.clear();
-				trailDraw.graphics.clear();
+				//trailDraw.graphics.clear();
 			}
 			
 			//draw trail
-			trailDraw.graphics.lineStyle(2, 0);
-			trailDraw.graphics.drawCircle(ball.x, ball.y, 3);
+			background.canvas.setPixel32(ball.x, ball.y,0xff00ffff);
 		}
 		
 		private var hitDraw:Sprite = new Sprite();
-		private var trailDraw:Sprite = new Sprite();
 		
 		private function ballBounce(playPos:Vector2D): void {
 			//bounceCoolDown = 2;
