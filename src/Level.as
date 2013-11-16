@@ -9,11 +9,12 @@ package
 	import flash.ui.Keyboard;
 	import gameLayers.backgroundLayer;
 	import utils.Stats;
+	import utils.debug.Debug;
 	
 	
 	/**
 	 * ...
-	 * @author Fabian Verkuijlen
+	 * @author Fabian Verkuijlen & Kit van de Bunt
 	 */
 	public class Level extends Sprite
 	{
@@ -38,11 +39,10 @@ package
 		private var player1Pos:Vector2D;
 		private var player2Pos:Vector2D;
 		private var ballPos:Vector2D;
-		private var bounceCoolDown:int = 0; 
-		private var drawCoolDown:int = 0; 
 		
 		private var background:backgroundLayer = new backgroundLayer();
-		private var status:Stats = new Stats();
+		private var status:Stats;
+		private var hitDraw:Sprite;
 		
 		public function Level() 
 		{
@@ -82,10 +82,10 @@ package
 			field.graphics.drawCircle(centerPoint.x, centerPoint.y, fieldRadius);
 			graphics.lineStyle(5, 0xff0000);
 			field.graphics.drawCircle(centerPoint.x, centerPoint.y, 5);
-			addChild(field);	
-			addChild(hitDraw);
-			addChild(status);
+			addChild(field);
+			Debug.test(function():void { hitDraw = new Sprite(); addChild(hitDraw); },Debug.Kit_bounce);
 			
+			Debug.test(function():void { status = new Stats(); addChild(status); }, Debug.ALL);
 		}
 		
 		private function loop(e:Event):void 
@@ -114,18 +114,14 @@ package
 			graphics.drawCircle(player1Pos.x, player1Pos.y, 5);
 			
 			//bounce
-			if (bounceCoolDown > 0) {
-				bounceCoolDown--;
-			}else{
-				if (ballPos.distance(centerPoint) < fieldRadius+ballRadius) {
-					if (ballPos.distance(player1Pos) < shieldRadius+ballRadius) {
-						trace("hit p1");
-						ballBounce(player1Pos);
-					}
-					if (ballPos.distance(player2Pos) < shieldRadius+ballRadius) {
-						trace("hit p2");
-						ballBounce(player2Pos);
-					}
+			if (ballPos.distance(centerPoint) < fieldRadius+ballRadius) {
+				if (ballPos.distance(player1Pos) < shieldRadius+ballRadius) {
+					Debug.test(function():void { trace("hit p1") } , Debug.Kit_bounce);
+					ballBounce(player1Pos);
+				}
+				if (ballPos.distance(player2Pos) < shieldRadius+ballRadius) {
+					Debug.test(function():void { trace("hit p2") } , Debug.Kit_bounce);
+					ballBounce(player2Pos);
 				}
 			}
 			//trace(ball.Velocity.angle);
@@ -133,28 +129,16 @@ package
 			if (ballPos.distance(centerPoint) > fieldRadius * 2) {
 				ball.x = centerPoint.x;
 				ball.y = centerPoint.y;
-				hitDraw.graphics.clear();
-				//trailDraw.graphics.clear();
+				Debug.test(function():void { hitDraw.graphics.clear(); } , Debug.Kit_bounce);
 			}
 			
 			//draw trail
 			background.canvas.setPixel32(ball.x, ball.y,0xff00ffff);
 		}
 		
-		private var hitDraw:Sprite = new Sprite();
-		
 		private function ballBounce(playPos:Vector2D): void {
-			//bounceCoolDown = 2;
-			
 			var vectorDistanceBallPlayer:Vector2D = new Vector2D(ball.x - playPos.x, ball.y - playPos.y);
-			var vectorDistancePlayerBall:Vector2D = new Vector2D(playPos.x - ball.x, playPos.y - ball.y);
-			
-			//draw stuff
-			var lineDraw:Sprite = new Sprite();
-			lineDraw.x = ball.x; 
-			lineDraw.y = ball.y;
-			hitDraw.addChild(lineDraw);
-			vectorDistanceBallPlayer.drawVector(lineDraw.graphics);
+			//var vectorDistancePlayerBall:Vector2D = new Vector2D(playPos.x - ball.x, playPos.y - ball.y);
 			
 			//bounce calculate
 			var ballreverse:Vector2D = new Vector2D( -ball.Velocity.x, -ball.Velocity.y);
@@ -169,9 +153,18 @@ package
 			}
 			ball.Velocity.angle = newAngele;
 			
-			trace("In: " + ballreverse.angle );
-			trace("normal: " + vectorDistanceBallPlayer.angle );
-			trace("OUT: " + ball.Velocity.angle );
+			Debug.test(function():void { 
+				//draw normal line
+				var lineDraw:Sprite = new Sprite();
+				lineDraw.x = ball.x; 
+				lineDraw.y = ball.y;
+				hitDraw.addChild(lineDraw);
+				vectorDistanceBallPlayer.drawVector(lineDraw.graphics);
+				//print info
+				trace("In: " + ballreverse.angle );
+				trace("normal: " + vectorDistanceBallPlayer.angle );
+				trace("OUT: " + ball.Velocity.angle );
+			} , Debug.Kit_bounce);
 			
 			//set ball out off player
 			var newPlayerPos:Vector2D = new Vector2D(); 
@@ -188,6 +181,7 @@ package
 			var y:Number = cy + radius * Math.sin(rotation);
 			return new Vector2D(x,y);
 		}
+		
 		public function KeyPressed(e:KeyboardEvent):void
 		{
 			switch(e.keyCode)
@@ -233,8 +227,6 @@ package
 				break;
 			}
 		}
-		
-		
 	}
 
 }
