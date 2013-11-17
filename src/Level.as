@@ -60,8 +60,8 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			centerPoint = new Vector2D(stage.stageWidth / 2, (stage.stageHeight / 2) );
 			
-			ui_Layer.addChild(scoreDisplay);
 			scoreDisplay.x = (( -scoreDisplay.width / 2)+centerPoint.x);
+			ui_Layer.addChild(scoreDisplay);
 			back_Layer.addChild(background);
 			
 			player1 = new Player1(fieldRadius,shieldRadius);
@@ -135,6 +135,8 @@ package
 					scoreDisplay.UpdateScore(0,1);
 				}
 			}
+			//update timer
+			scoreDisplay.updateTimer();
 			
 			//remove ball if out off field
 			if (ballPos.distance(centerPoint) > fieldRadius * 2) {

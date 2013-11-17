@@ -9,6 +9,7 @@ package
 	public class Player1 extends Player
 	{
 		private var player1:Player1_Art = new Player1_Art();
+		//private var player1:Sprite = new Sprite();
 		
 		public function Player1(fieldRadius:int,shieldRadius:int) 
 		{

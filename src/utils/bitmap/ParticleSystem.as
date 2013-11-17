@@ -3,6 +3,7 @@ package utils.bitmap
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filters.ColorMatrixFilter;
@@ -17,7 +18,7 @@ package utils.bitmap
 	 * ...
 	 * @author Kit van de bunt
 	 */
-	public class ParticleSystem extends Canvas
+	public class ParticleSystem extends Sprite
 	{
 		private var bitmapP1:DisplayObject;
 		private var bitmapDataP1:BitmapData;
@@ -31,30 +32,24 @@ package utils.bitmap
 			bitmapDataP1 = new BitmapData(bitmapP1.width, bitmapP1.height, true);
 			
 			bitmapDataP1.draw(bitmapP1);
-			
-			//var alfa:Number = particles[i].lifeTime / particles[i].startLifeTime * 0.05;
-			//trace(alfa);
-			//colorfilt(alfa)
 		}
 		
 		private function init(e:Event = null):void 
 		{
-			canvas.setPixel32(10, 10, 0xffffffff);
+			//canvas.setPixel32(10, 10, 0xffffffff);
 		}
 		
 		private function colorfilt(alfa:Number):void {
-			
 			var matrix:Array = new Array();
-            matrix=matrix.concat([alfa,0,0,alfa,0]);// red
-            matrix=matrix.concat([alfa,0,0,alfa,0]);// green
-            matrix=matrix.concat([0,0,0,0,0]);// blue
-            matrix=matrix.concat([0,0,0,1,0]);// alpha
-            var my_filter:ColorMatrixFilter=new ColorMatrixFilter(matrix);
+            matrix=matrix.concat([1,0,0,0,0]);// red
+            matrix=matrix.concat([0,alfa,0,0,0]);// green
+            matrix=matrix.concat([0,0,alfa,0,0]);// blue
+            matrix=matrix.concat([0,0,0,alfa,0]);// alpha
+            var my_filter:ColorMatrixFilter = new ColorMatrixFilter(matrix);
             bitmapP1.filters=[my_filter];
 		}
 		
 		public function click(m:MouseEvent):void {
-			trace("click");
 			for (var j:int = 0; j < 50; j++) 
 			{
 				particles.push(new particle(mouseX, 
@@ -76,7 +71,7 @@ package utils.bitmap
 				}else {
 					var alfa:Number = particles[i].lifeTime / particles[i].startLifeTime;
 					//trace(alfa);
-					//colorfilt(alfa)
+					colorfilt(alfa)
 					var mat:Matrix = new Matrix();
 					//mat.scale(0.5+Math.random(),0.5+Math.random());
 					//mat.rotate(systemRotation );
@@ -89,7 +84,7 @@ package utils.bitmap
 			
 			for (var j:int = 0; j < drawAmount; j++) 
 			{
-				particles.push(new particle(xP, yP, Random.rangePosNum(maxSpeed,maxSpeed), systemRotation+Random.rangePosNum(-0.5,0.5) , 3,0.99));
+				particles.push(new particle(xP, yP, Random.rangePosNum(maxSpeed,maxSpeed), systemRotation+Random.rangePosNum(-0.3,0.3) , 10*Math.random()+15,0.99));
 			}
 		}
 	}
