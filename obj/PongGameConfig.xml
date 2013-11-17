@@ -18,29 +18,18 @@
       <name>CONFIG::timeStamp</name>
       <value>'17-11-2013'</value>
     </define>
-    <define append="true">
-      <name>CONFIG::air</name>
-      <value>false</value>
-    </define>
-    <define append="true">
-      <name>CONFIG::mobile</name>
-      <value>false</value>
-    </define>
-    <define append="true">
-      <name>CONFIG::desktop</name>
-      <value>false</value>
-    </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>C:\Development\project\as3\CirclePong\src</path-element>
+      <path-element>D:\School\Portfolio\PongGame\PongGame\src</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>C:\Development\project\as3\CirclePong\lib\ArtLib.swc</path-element>
+      <path-element>D:\School\Portfolio\PongGame\PongGame\lib\FirstLibrary.swc</path-element>
+      <path-element>D:\School\Portfolio\PongGame\PongGame\lib\ArtLib.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Development\project\as3\CirclePong\src\Level.as</path-element>
+    <path-element>D:\School\Portfolio\PongGame\PongGame\src\Level.as</path-element>
   </file-specs>
   <default-background-color>#808080</default-background-color>
   <default-frame-rate>30</default-frame-rate>

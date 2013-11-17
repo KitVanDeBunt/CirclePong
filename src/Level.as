@@ -2,8 +2,11 @@ package
 {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.display.StageDisplayState;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	import gameLayers.Background;
@@ -45,14 +48,47 @@ package
 		private var game_Layer:Sprite = new Sprite();
 		private var ui_Layer:Sprite = new Sprite();
 		private var back_Layer:Sprite = new Sprite();
-		
+		public var BGScreen	:Beginscreen = new Beginscreen();
+		private var fullscreen:Fullscreen = new Fullscreen();
 		public function Level() 
 		{
-			addEventListener(Event.ADDED_TO_STAGE, init);
+			addEventListener(Event.ADDED_TO_STAGE, initGame);
+		}
+		
+		private function initGame(e:Event):void 
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, initGame);
+			BGScreen.addEventListener(Beginscreen.START, init)
+			addChild(BGScreen);
+			BGScreen.x = 150;
+			BGScreen.y = 150;
+			addChild(fullscreen);
+			fullscreen.addEventListener(MouseEvent.CLICK, goFull);
+			fullscreen.x = 600;
+			fullscreen.y = 0;
+		}
+		//zorg dat het fullscreen event word uitgevoerd.
+		function goFull(event:MouseEvent):void {
+		setFullScreen();
+		}
+		
+		//laad het full screen event in.
+		function setFullScreen():void {
+		if (stage.displayState == StageDisplayState.NORMAL) {
+		stage.displayState = StageDisplayState.FULL_SCREEN;
+		stage.scaleMode = StageScaleMode.NO_SCALE;
+		} else {
+			stage.displayState = StageDisplayState.NORMAL;
+			}
 		}
 		
 		private function init(e:Event):void 
 		{
+			removeChild(BGScreen);
+			removeChild(fullscreen);
+			fullscreen = null;
+			BGScreen = null;
+			
 			addChild(back_Layer);
 			addChild(game_Layer);
 			addChild(ui_Layer);
