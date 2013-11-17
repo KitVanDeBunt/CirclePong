@@ -5,12 +5,11 @@ package
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.geom.Point;
-	import flash.text.TextField;
 	import flash.ui.Keyboard;
-	import gameLayers.backgroundLayer;
+	import gameLayers.Background;
+	import score.Score;
 	import utils.Stats;
 	import utils.debug.Debug;
-	
 	
 	/**
 	 * ...
@@ -29,20 +28,23 @@ package
 		private var ball:Ball = new Ball();
 		
 		private var fieldRadius:int = 250;
-		private var shieldRadius:int = 100;
+		private var shieldRadius:int = 50;
 		private var ballRadius:int = 25;
 		
 		public static var centerPoint:Vector2D;
 		
-		private var textfield:TextField = new TextField();
-		private var textfield2:TextField = new TextField();
 		private var player1Pos:Vector2D;
 		private var player2Pos:Vector2D;
 		private var ballPos:Vector2D;
 		
-		private var background:backgroundLayer = new backgroundLayer();
+		private var background:Background = new Background();
 		private var status:Stats;
 		private var hitDraw:Sprite;
+		private var scoreDisplay:Score = new Score();
+		
+		private var game_Layer:Sprite = new Sprite();
+		private var ui_Layer:Sprite = new Sprite();
+		private var back_Layer:Sprite = new Sprite();
 		
 		public function Level() 
 		{
@@ -51,28 +53,33 @@ package
 		
 		private function init(e:Event):void 
 		{
-			addChild(background);
+			addChild(back_Layer);
+			addChild(game_Layer);
+			addChild(ui_Layer);
 			
-			centerPoint = new Vector2D(stage.stageWidth/2, (stage.stageHeight/2) );
-			addChild(textfield);
-			addChild(textfield2);
-			textfield.width = 600;
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+			centerPoint = new Vector2D(stage.stageWidth / 2, (stage.stageHeight / 2) );
+			
+			ui_Layer.addChild(scoreDisplay);
+			scoreDisplay.x = (( -scoreDisplay.width / 2)+centerPoint.x);
+			back_Layer.addChild(background);
 			
 			player1 = new Player1(fieldRadius,shieldRadius);
 			player2 = new Player2(fieldRadius,shieldRadius);
 			
 			//this.y += 50;
-			removeEventListener(Event.ADDED_TO_STAGE, init);
-			addChild(player1);
-			addChild(player2);
+			
 			player1.x = stage.stageWidth / 2;
 			player2.x = stage.stageWidth / 2;
 			player1.rotationZ = 180;
 			player1.y = stage.stageHeight / 2;
 			player2.y = stage.stageHeight / 2;
-			//addChild(ball);
 			ball.x = stage.stageWidth / 2;
 			ball.y = stage.stageHeight / 2;
+			
+			game_Layer.addChild(player1);
+			game_Layer.addChild(player2);
+			//addChild(ball);
 			addEventListener(Event.ENTER_FRAME, loop);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, KeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, KeyReleased);
@@ -84,7 +91,6 @@ package
 			field.graphics.drawCircle(centerPoint.x, centerPoint.y, 5);
 			addChild(field);
 			Debug.test(function():void { hitDraw = new Sprite(); addChild(hitDraw); },Debug.Kit_bounce);
-			
 			Debug.test(function():void { status = new Stats(); addChild(status); }, Debug.ALL);
 		}
 		
@@ -103,9 +109,6 @@ package
 			player2Pos = calcPointOncircle(player2.rotationZ * Math.PI / 180, centerPoint.x, centerPoint.y, fieldRadius+shieldRadius-20);
 			ballPos = new Vector2D(ball.x, ball.y);
 			
-			
-			textfield.text =  " p2:  " + ballPos.distance( centerPoint);
-			
 			//draw stuff
 			graphics.clear();
 			graphics.lineStyle(5);
@@ -123,17 +126,24 @@ package
 					Debug.test(function():void { trace("hit p2") } , Debug.Kit_bounce);
 					ballBounce(player2Pos);
 				}
+			}else if(ball.ballOnField == true){
+				//set score
+				ball.ballOnField = false;
+				if (ball.x>centerPoint.x) {
+					scoreDisplay.UpdateScore(1,0);
+				}else {
+					scoreDisplay.UpdateScore(0,1);
+				}
 			}
-			//trace(ball.Velocity.angle);
 			
+			//remove ball if out off field
 			if (ballPos.distance(centerPoint) > fieldRadius * 2) {
+				//reset ball
+				ball.ballOnField = true;
 				ball.x = centerPoint.x;
 				ball.y = centerPoint.y;
 				Debug.test(function():void { hitDraw.graphics.clear(); } , Debug.Kit_bounce);
 			}
-			
-			//draw trail
-			background.canvas.setPixel32(ball.x, ball.y,0xff00ffff);
 		}
 		
 		private function ballBounce(playPos:Vector2D): void {

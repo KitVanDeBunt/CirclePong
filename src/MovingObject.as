@@ -11,14 +11,11 @@ package
 		public function MovingObject(velocityX:Number = 0 ,velocityY:Number = 0) 
 		{
 			Velocity = new Vector2D(velocityX, velocityY);
-			
-			
 		}
-		public function loop()
+		public function loop():void
 		{
 			this.x += Velocity.x;
 			this.y += Velocity.y;
-			
 		}
 		
 	}

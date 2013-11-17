@@ -9,9 +9,11 @@ package
 	public class Ball extends MovingObject
 	{
 		
-		private var ball:BallArt = new BallArt();
+		//private var ball:BallArt = new BallArt();
+		public var ballOnField:Boolean;
 		public function Ball() 
 		{
+			ballOnField = true;
 			var XSpeed:Number = (Math.random() -0.5) ;
 			var YSpeed:Number = (Math.random() -0.5) ;
 			if (XSpeed > 0) {
@@ -25,10 +27,7 @@ package
 				YSpeed -= 3;
 			}
 			super(XSpeed,YSpeed);
-			//super(-1,0);
-			//super(-1,-1);
-			addChild(ball);
-			
+			//addChild(ball);
 		}
 		
 	}

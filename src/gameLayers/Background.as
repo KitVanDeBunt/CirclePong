@@ -11,24 +11,22 @@ package gameLayers
 	
 	
 	
-	public class backgroundLayer extends Canvas
+	public class Background extends Canvas
 	{
 		[Embed(source="../img/firePart2.png")]
 		private var particle_png:Class;
 		
 		public var fire:ParticleSystem;
 		
-		public function backgroundLayer() 
-		{addEventListener(Event.ADDED_TO_STAGE, init);
-			
+		public function Background() 
+		{
+			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		public function init(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			fire = new ParticleSystem(particle_png);
 			addChild(fire);
-			
-			
 			stage.addEventListener(MouseEvent.CLICK, fire.click);
 		}
 		
