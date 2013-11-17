@@ -32,7 +32,7 @@ package utils.bitmap
 			rotation = Rotation;
 		}*/
 		
-		public function check() {
+		public function check():void {
 			trace(speed + " xp:" + xP + " yp:" + yP + " rot:" + rotation);
 		}
 		

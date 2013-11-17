@@ -27,7 +27,7 @@ package gameLayers
 			
 			fire = new ParticleSystem(particle_png);
 			addChild(fire);
-			stage.addEventListener(MouseEvent.CLICK, fire.click);
+			//stage.addEventListener(MouseEvent.CLICK, fire.click);
 		}
 		
 		public function drawFire(xPos:int, yPos:int, rot:Number):void {
