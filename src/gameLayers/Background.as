@@ -13,7 +13,7 @@ package gameLayers
 	
 	public class Background extends Canvas
 	{
-		[Embed(source="../img/firePart4.png")]
+		[Embed(source="../../lib/img/firePart4.png")]
 		private var particle_png:Class;
 		
 		public var fire:ParticleSystem;
