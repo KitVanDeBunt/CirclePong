@@ -2,6 +2,7 @@ package gameLayers
 {
 	import flash.display.Bitmap;
 	import flash.events.Event;
+	import flash.geom.Matrix;
 	import utils.bitmap.Canvas;
 	import utils.bitmap.ParticleSystem;
 	import flash.events.MouseEvent;
@@ -21,7 +22,9 @@ package gameLayers
 		
 		[Embed(source="../../lib/img/topPart.png")]
 		private var Ball_img:Class;
-		private var ballTop:Bitmap;
+		private var ballHead:Bitmap;
+		private var ballDisplacmentW:int;
+		private var ballDisplacmentH:int;
 		
 		public function Background() 
 		{
@@ -33,23 +36,27 @@ package gameLayers
 			fire = new ParticleSystem(particle_png);
 			addChild(fire);
 			//stage.addEventListener(MouseEvent.CLICK, fire.click);
-			ballTop = new Ball_img();
+			ballHead = new Ball_img();
 			
-			//ballTop.x = - ballTop.width / 2;
-			//ballTop.y = - ballTop.height / 2;
+			ballDisplacmentW = - ballHead.width / 2;
+			ballDisplacmentH = - ballHead.height / 2;
 			//addChild(ballTop);
 			
 		}
 		
 		public function drawFire(xPos:int, yPos:int, rot:Number):void {
 			canvas.lock();
-			//blur(8, 8, 3);
-			wipe(0xf00557799);
-			fire.draw(xPos, yPos, rot, canvas, 1, 0, 0);
-			fire
+				//draw particles
+				//blur(8, 8, 3);
+				wipe(0xf00557799);
+				fire.draw(xPos, yPos, rot, canvas, 1, 0, 0);
+				//draw head
+				var headBallMatrix:Matrix = new Matrix();
+				headBallMatrix.translate( ballDisplacmentW, ballDisplacmentH);
+				headBallMatrix.rotate(rot+Math.PI/2);
+				headBallMatrix.translate( xPos, yPos);
+				canvas.draw(ballHead ,headBallMatrix);
 			canvas.unlock();
-			
-			
 		}
 		
 	}
