@@ -14,7 +14,7 @@ package score
 		
 		private var ui:UI = new UI();
 		private var ticks:int;
-		private var startTime:int = 60;
+		private var startTime:int = 5;
 		
 		static public const ENDGAME:String = "endgame";
 		

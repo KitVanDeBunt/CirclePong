@@ -7,9 +7,11 @@ package utils.bitmap
 	 */
 	public class particle extends MovableObject
 	{
-		public function particle(XP:int,YP:int,Speed:Number,Rotation:Number,LifeTime:int,SlowDown:Number) 
+		public var xScale:int;
+		public function particle(XP:int,YP:int,Speed:Number,Rotation:Number,LifeTime:int,SlowDown:Number,XScale:int) 
 		{
-			super(XP,YP,Speed,Rotation,LifeTime,SlowDown)
+			super(XP, YP, Speed, Rotation, LifeTime, SlowDown)
+			xScale = XScale;
 		}
 		
 		

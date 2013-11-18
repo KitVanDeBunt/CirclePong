@@ -20,7 +20,7 @@ package gameLayers
 		
 		public var fire:ParticleSystem;
 		
-		[Embed(source="../../lib/img/topPart.png")]
+		[Embed(source="../../lib/img/topPart2.png")]
 		private var Ball_img:Class;
 		private var ballHead:Bitmap;
 		private var ballDisplacmentW:int;
@@ -52,7 +52,7 @@ package gameLayers
 				fire.draw(xPos, yPos, rot, canvas, 1, 0, 0);
 				//draw head
 				var headBallMatrix:Matrix = new Matrix();
-				headBallMatrix.translate( ballDisplacmentW, ballDisplacmentH);
+				headBallMatrix.translate( ballDisplacmentW, ballDisplacmentH+10);
 				headBallMatrix.rotate(rot+Math.PI/2);
 				headBallMatrix.translate( xPos, yPos);
 				canvas.draw(ballHead ,headBallMatrix);
