@@ -2,6 +2,7 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import gameLayers.Beginscreen;
 	import gameLayers.Level;
 	import gameLayers.WinScreen;
@@ -19,6 +20,7 @@ package
 		private var player1win:Player1Win;
 		private var tieScreen:Tie;
 		private var beginScreen:Beginscreen;
+		private var restartButton:Restart = new Restart();
 		private var endGame:WinScreen;
 		private var level:Level;
 		public function Main():void 
@@ -73,6 +75,15 @@ package
 				addChild(tieScreen);
 				
 			}
+			addChild(restartButton);
+			restartButton.x = 150;
+			restartButton.y = 500;
+			restartButton.addEventListener(MouseEvent.CLICK, restartGame)
+		}
+		
+		private function restartGame(e:MouseEvent):void 
+		{
+			init();
 		}
 	}
 	

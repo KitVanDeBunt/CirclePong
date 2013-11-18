@@ -45,7 +45,7 @@ package gameLayers
 		private var game_Layer:Sprite = new Sprite();
 		private var ui_Layer:Sprite = new Sprite();
 		private var back_Layer:Sprite = new Sprite();
-		
+		private var backgroundArt:Background_Art = new Background_Art();
 		public function Level() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
@@ -57,10 +57,11 @@ package gameLayers
 		
 		private function init(e:Event):void 
 		{
+			
 			addChild(back_Layer);
 			addChild(game_Layer);
 			addChild(ui_Layer);
-			
+			back_Layer.addChild(backgroundArt);
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			scoreDisplay.addEventListener(Score.ENDGAME, stopLoop)
 			centerPoint = new Vector2D(stage.stageWidth / 2, (stage.stageHeight / 2) );
