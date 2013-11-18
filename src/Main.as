@@ -90,6 +90,16 @@ package
 		
 		private function restartGame(e:MouseEvent):void 
 		{
+			if(player1win != null){
+			removeChild(player1win);
+			}
+			if(player2win != null){
+			removeChild(player2win);
+			}
+			if(tieScreen != null){
+			removeChild(tieScreen);
+			}
+			//SFX.playMusic(SFX.Music_Menu);
 			init();
 		}
 	}
