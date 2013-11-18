@@ -35,6 +35,7 @@ package sound
 		private static var fireChannal:SoundChannel = new SoundChannel();
 		private static var transformFire:SoundTransform = new SoundTransform(0, 0);
 		
+		
 		public static function initSFX():void 
 		{
 			soundList[0] = new SoundHolder(Sound_Shield, new ShieldBach_Sound());
