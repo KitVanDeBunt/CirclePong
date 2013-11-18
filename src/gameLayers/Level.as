@@ -131,7 +131,8 @@ package gameLayers
 					Debug.test(function():void { trace("hit p2") } , Debug.Kit_bounce);
 					ballBounce(player2Pos);
 				}
-			}else if(ball.ballOnField == true){
+			}else if (ball.ballOnField == true) {
+				SFX.playSound(SFX.Sound_Gejuich);
 				//set score
 				ball.ballOnField = false;
 				if (ball.x>centerPoint.x) {
