@@ -67,6 +67,7 @@ package sound
 				if(soundList[i].name == musicName){
 					musicChannal = soundList[i]._sound.play();
 					PlayingMusic = soundList[i].name;
+					setVolume(0.7, musicChannal);
 				}
 			}
 			musicChannal.addEventListener(Event.SOUND_COMPLETE, soundReplay);
@@ -88,6 +89,7 @@ package sound
 			{
 				if(soundList[i].name == PlayingMusic){
 					musicChannal = soundList[i]._sound.play();
+					setVolume(0.7, musicChannal);
 				}
 			}
 			musicChannal.addEventListener(Event.SOUND_COMPLETE, soundReplay);
@@ -104,7 +106,7 @@ package sound
 			fireChannal.addEventListener(Event.SOUND_COMPLETE , fireReplay);
 		}
 		
-		private static function setVolume(volume:Number , channal:SoundChannel) {
+		private static function setVolume(volume:Number , channal:SoundChannel):void {
 			var transform:SoundTransform = new SoundTransform(volume);
 			channal.soundTransform = transform;
 		}

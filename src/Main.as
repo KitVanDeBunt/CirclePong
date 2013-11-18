@@ -57,6 +57,8 @@ package
 			beginScreen = null;
 			level = new Level();
 			addChild(level);
+			stage.stageFocusRect = false;
+			stage.focus = level;
 			level.scoreDisplay.addEventListener(Score.ENDGAME, LoadWinScreen)
 		}
 		
@@ -64,23 +66,19 @@ package
 		{
 			removeChild(level);
 			level = null;
-			trace(winningPlayer1 + " " + winningPlayer2);
 			if (winningPlayer1)
 			{
-				trace("player1 wins");
 				player1win = new Player1Win();
 				addChild(player1win);
 				
 			}else if (winningPlayer2)
 			{
-				trace("player 2 win");
 				player2win = new Player2Win();
 				addChild(player2win);
 			}else if(!winningPlayer1 && !winningPlayer2)
 			{
 				tieScreen = new Tie();
 				addChild(tieScreen);
-				
 			}
 			addChild(restartButton);
 			restartButton.x = 150;
@@ -91,13 +89,16 @@ package
 		private function restartGame(e:MouseEvent):void 
 		{
 			if(player1win != null){
-			removeChild(player1win);
+				removeChild(player1win);
+				player1win = null;
 			}
 			if(player2win != null){
-			removeChild(player2win);
+				removeChild(player2win);
+				player2win = null;
 			}
 			if(tieScreen != null){
-			removeChild(tieScreen);
+				removeChild(tieScreen);
+				tieScreen = null;
 			}
 			//SFX.playMusic(SFX.Music_Menu);
 			init();

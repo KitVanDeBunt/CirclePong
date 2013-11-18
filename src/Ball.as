@@ -1,5 +1,6 @@
 package  
 {
+	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	/**
@@ -8,8 +9,7 @@ package
 	 */
 	public class Ball extends MovingObject
 	{
-		
-		//private var ball:BallArt = new BallArt();
+		private var ball:Sprite = new Sprite();
 		public var ballOnField:Boolean;
 		public function Ball() 
 		{
@@ -26,8 +26,13 @@ package
 			}else {
 				YSpeed -= 3;
 			}
-			super(XSpeed,YSpeed);
-			//addChild(ball);
+			super(XSpeed, YSpeed);
+			
+			ball.graphics.lineStyle(5, 0, 0.3);
+			ball.graphics.drawCircle(0, 0, 25);
+			addChild(ball);
+			ball.x = 0;
+			ball.y = 0;
 		}
 		
 	}

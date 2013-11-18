@@ -86,7 +86,7 @@ package gameLayers
 			
 			game_Layer.addChild(player1);
 			game_Layer.addChild(player2);
-			//addChild(ball);
+			addChild(ball);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, KeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, KeyReleased);
 			

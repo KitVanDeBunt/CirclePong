@@ -10,7 +10,6 @@ package utils.bitmap
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-	import utils.bitmap.Canvas;
 	import flash.ui.Mouse;
 	import utils.Random;
 
@@ -65,7 +64,7 @@ package utils.bitmap
 			//blur(8,8,2);
 			
 			for (var i:int = 0; i < particles.length - 1; i++) {
-				particles[i].move()
+				particles[i].move();
 				if(particles[i].lifeTime<0){
 					particles.splice(i , 1);
 				}else {
