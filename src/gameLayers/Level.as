@@ -10,6 +10,7 @@ package gameLayers
 	import score.Score;
 	import utils.Stats;
 	import utils.debug.Debug;
+	import sound.SFX;
 	
 	/**
 	 * ...
@@ -85,7 +86,6 @@ package gameLayers
 			game_Layer.addChild(player1);
 			game_Layer.addChild(player2);
 			//addChild(ball);
-			addEventListener(Event.ENTER_FRAME, loop);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, KeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, KeyReleased);
 			
@@ -99,7 +99,7 @@ package gameLayers
 			Debug.test(function():void { status = new Stats(); addChild(status); }, Debug.ALL);
 		}
 		
-		private function loop(e:Event):void 
+		public function loop():void 
 		{
 			
 			//move
@@ -154,6 +154,7 @@ package gameLayers
 		}
 		
 		private function ballBounce(playPos:Vector2D): void {
+			SFX.FireHitSound();
 			var vectorDistanceBallPlayer:Vector2D = new Vector2D(ball.x - playPos.x, ball.y - playPos.y);
 			//var vectorDistancePlayerBall:Vector2D = new Vector2D(playPos.x - ball.x, playPos.y - ball.y);
 			

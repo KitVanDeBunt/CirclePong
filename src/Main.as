@@ -38,7 +38,14 @@ package
 			beginScreen = new Beginscreen();
 			addChild(beginScreen);
 			beginScreen.addEventListener(Beginscreen.START, startGame);
-			
+			addEventListener(Event.ENTER_FRAME, loop);
+		}
+		
+		private function loop(e:Event):void {
+			if (level) {
+				level.loop();
+			}
+			SFX.loopSound();
 		}
 		
 		private function startGame(e:Event):void {
