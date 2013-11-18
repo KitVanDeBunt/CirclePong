@@ -1,6 +1,7 @@
 package score 
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.geom.Point;
 	/**
 	 * ...
@@ -14,6 +15,9 @@ package score
 		private var ui:UI = new UI();
 		private var ticks:int;
 		private var time:int;
+		
+		static public const ENDGAME:String = "endgame";
+		
 		public function Score() 
 		{
 			addChild(ui);
@@ -21,6 +25,7 @@ package score
 			ui.Score1.ScorePlayer1.text = String(scorePlayer1);
 			ticks = 0;
 			time = 0;
+			
 		}
 		public function getScore ():Point
 		{ 
@@ -34,6 +39,27 @@ package score
 				time++;
 				ui.TimerHolderHolder.TimerHolder.Timer.text = time;
 			}
+			if (time >= 3)
+				{
+					if (scorePlayer1 == scorePlayer2)
+				{
+					trace("begin function")
+					Main.winningPlayer1 = false;
+					Main.winningPlayer2 = false;
+				}else if (scorePlayer1 > scorePlayer2) {
+					trace("begin function1")
+					Main.winningPlayer1 = true;
+				}else {
+					trace("begin function2")
+					
+					Main.winningPlayer2 = true;
+				}
+				dispatchEvent(new Event(ENDGAME));
+			
+			}
+			
+				
+
 		}
 		
 		//de functie werkt via de _scorePlayer1 en _scorePlayer2, dus geen dubbelen variabelen.

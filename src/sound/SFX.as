@@ -22,12 +22,13 @@ package sound
 		private static var Menu_Sound:Class;
 		[Embed(source = "../../lib/sound/fire loop.mp3")]
 		private static var Fire_Sound:Class;
-		[Embed(source = "../../lib/sound/background music done.mp3")]
+		[Embed(source="../../lib/sound/background music done.mp3")]
 		private static var Game_Sound:Class;
 		[Embed(source="../../lib/sound/gejuich.mp3")]
 		private static var Gejuich_Sound:Class;
 		
 		private static var musicChannal:SoundChannel = new SoundChannel();
+		
 		
 		
 		public static function initSFX():void 
