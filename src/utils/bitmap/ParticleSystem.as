@@ -40,7 +40,7 @@ package utils.bitmap
 		
 		private function colorfilt(alfa:Number):void {
 			var matrix:Array = new Array();
-            matrix=matrix.concat([1,0,0,0,0]);// red
+            matrix=matrix.concat([alfa,0,0,0,0]);// red
             matrix=matrix.concat([0,alfa,0,0,0]);// green
             matrix=matrix.concat([0,0,alfa,0,0]);// blue
             matrix=matrix.concat([0,0,0,alfa,0]);// alpha
@@ -72,15 +72,14 @@ package utils.bitmap
 					//trace(alfa);
 					colorfilt(alfa)
 					var mat:Matrix = new Matrix();
-					//mat.scale(0.5+Math.random(),0.5+Math.random());
-					//mat.rotate(systemRotation );
-					var randomflip:int = Math.random();
-					trace(particles[i].xScale);
 					mat.scale(particles[i].xScale, 1);
-					mat.translate( -bitmapDataP1.width / 2, -bitmapDataP1.width / 2);
+					if(particles[i].xScale!=1){
+						mat.translate( bitmapDataP1.width , 0);
+					}
+					mat.translate(particles[i].xdisplace, 0);
+					mat.translate(-bitmapDataP1.width / 2, -bitmapDataP1.width / 2);
 					mat.rotate(particles[i].rotation + (90 / 180 * Math.PI));
 					mat.translate(particles[i].xP , particles[i].yP );
-					
 					DrawTo.draw(bitmapP1,mat);
 				}
 			}
@@ -88,18 +87,20 @@ package utils.bitmap
 			for (var j:int = 0; j < drawAmount; j++) 
 			{
 				var scaleUpDown:int = Random.rangePosNum( 1, 3);
+				var scaleX:int;
 				if (scaleUpDown == 2) {
-					var scaleX:int = 1;
+					scaleX = 1;
 				}else {
-					var scaleX:int = -1;
+					scaleX = -1;
 				}
-				particles.push(new particle(xP, 
+				particles.push(new particle(xP,
 											yP, 
 											Random.rangePosNum(maxSpeed,maxSpeed), 
 											systemRotation + Random.rangePosNum( -0.3, 0.3) ,
-											10 * Math.random() + 15,
+											20 * Math.random() + 15,
 											0.99,
-											scaleX
+											scaleX,
+											Random.rangePosNum( -10, 10)
 											));
 			}
 		}
