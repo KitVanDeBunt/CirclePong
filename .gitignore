@@ -3,7 +3,8 @@ bin/
 bin-debug/
 bin-release/
 PongGame.as3proj
-obj/*
+obj/PongGameConfig.old
+obj/PongGameConfig.xml
 
 # Other files and folders
 .settings/
