@@ -14,7 +14,7 @@ package score
 		
 		private var ui:UI = new UI();
 		private var ticks:int;
-		private var time:int;
+		private var startTime:int = 30;
 		
 		static public const ENDGAME:String = "endgame";
 		
@@ -24,7 +24,6 @@ package score
 			ui.Score2.ScorePlayer2.text = String(scorePlayer2);
 			ui.Score1.ScorePlayer1.text = String(scorePlayer1);
 			ticks = 0;
-			time = 0;
 			
 		}
 		public function getScore ():Point
@@ -36,10 +35,10 @@ package score
 			ticks++;
 			if (ticks >= 30) {
 				ticks = 0;
-				time++;
-				ui.TimerHolderHolder.TimerHolder.Timer.text = time;
+				startTime--;
+				ui.TimerHolderHolder.TimerHolder.Timer.text = startTime;
 			}
-			if (time >= 3)
+			if (startTime <= 0)
 				{
 					if (scorePlayer1 == scorePlayer2)
 				{
@@ -55,11 +54,7 @@ package score
 					Main.winningPlayer2 = true;
 				}
 				dispatchEvent(new Event(ENDGAME));
-			
 			}
-			
-				
-
 		}
 		
 		//de functie werkt via de _scorePlayer1 en _scorePlayer2, dus geen dubbelen variabelen.

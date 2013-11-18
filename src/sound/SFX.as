@@ -30,10 +30,15 @@ package sound
 		private static var Gejuich_Sound:Class;
 		
 		private static var musicChannal:SoundChannel = new SoundChannel();
+		private static var SFXChannal:SoundChannel = new SoundChannel();
 		
 		private static var PlayingMusic:String;
 		private static var fireChannal:SoundChannel = new SoundChannel();
-		private static var transformFire:SoundTransform = new SoundTransform(0, 0);
+		
+		private static var soundChannal:SoundChannel = new SoundChannel();
+		
+		private static var fireVolume:Number = 0.2;
+		private static var fireBallHit:Boolean = false;
 		
 		
 		public static function initSFX():void 
@@ -42,7 +47,14 @@ package sound
 			soundList[1] = new SoundHolder(Music_Menu, new Menu_Sound());
 			soundList[2] = new SoundHolder(Sound_Fire, new Fire_Sound());
 			soundList[3] = new SoundHolder(Music_Game, new Game_Sound);
-			soundList[4] = new SoundHolder(Sound_Gejuich,new Gejuich_Sound());
+			soundList[4] = new SoundHolder(Sound_Gejuich, new Gejuich_Sound());
+			for (var i:int = 0; i < soundList.length; i++){
+				if (soundList[i].name == Sound_Fire) {
+					fireChannal = soundList[i]._sound.play();
+					setVolume(fireVolume, fireChannal);
+				} 
+			}
+			fireChannal.addEventListener(Event.SOUND_COMPLETE , fireReplay);
 		}
 		/**
 		* plays music in a loop
@@ -60,6 +72,16 @@ package sound
 			musicChannal.addEventListener(Event.SOUND_COMPLETE, soundReplay);
 		}
 		
+		public static function playSound(musicName:String):void {
+			for (var i:int = 0; i < soundList.length; i++) 
+			{
+				if(soundList[i].name == musicName){
+					soundChannal = soundList[i]._sound.play();
+					setVolume(0.3, soundChannal);
+				}
+			}
+		}
+		
 		public static function soundReplay(e:Event):void {
 			musicChannal.removeEventListener(Event.SOUND_COMPLETE, soundReplay);
 			for (var i:int = 0; i < soundList.length; i++) 
@@ -70,8 +92,40 @@ package sound
 			}
 			musicChannal.addEventListener(Event.SOUND_COMPLETE, soundReplay);
 		}
-		public static function increaseFireSound():void {
-			
+		
+		public static function fireReplay(e:Event):void {
+			fireChannal.removeEventListener(Event.SOUND_COMPLETE , fireReplay);
+			for (var i:int = 0; i < soundList.length; i++){
+				if(soundList[i].name == Sound_Fire){
+					fireChannal = soundList[i]._sound.play();
+					setVolume(fireVolume, fireChannal);
+				} 
+			}
+			fireChannal.addEventListener(Event.SOUND_COMPLETE , fireReplay);
+		}
+		
+		private static function setVolume(volume:Number , channal:SoundChannel) {
+			var transform:SoundTransform = new SoundTransform(volume);
+			channal.soundTransform = transform;
+		}
+		public static function loopSound():void {
+			if (fireVolume > 0.2 && !fireBallHit) {
+				fireVolume -= 0.01;
+				setVolume(fireVolume, fireChannal);
+			}else if (fireBallHit) {
+				fireVolume += 0.06;
+				if (fireVolume > 1) {
+					fireBallHit = false;
+					setVolume(fireVolume, fireChannal);
+				}
+			}
+		}
+		
+		public static function FireHitSound():void {
+			//if(fireVolume<0.5){
+				fireVolume = 1 ;
+			//}
+			fireBallHit = true;
 		}
 	}
 }
