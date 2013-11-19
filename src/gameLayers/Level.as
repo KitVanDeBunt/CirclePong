@@ -1,5 +1,6 @@
 package gameLayers
 {
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -46,7 +47,10 @@ package gameLayers
 		private var game_Layer:Sprite = new Sprite();
 		private var ui_Layer:Sprite = new Sprite();
 		private var back_Layer:Sprite = new Sprite();
-		private var backgroundArt:Background_Art = new Background_Art();
+		
+		[Embed(source = "../../lib/img/background.png")]
+		private var back_png:Class;
+		private var backArt:Bitmap = new back_png();
 		public function Level() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
@@ -62,7 +66,7 @@ package gameLayers
 			addChild(back_Layer);
 			addChild(game_Layer);
 			addChild(ui_Layer);
-			back_Layer.addChild(backgroundArt);
+			back_Layer.addChild(backArt);
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			scoreDisplay.addEventListener(Score.ENDGAME, stopLoop)
 			centerPoint = new Vector2D(stage.stageWidth / 2, (stage.stageHeight / 2) );
@@ -86,17 +90,19 @@ package gameLayers
 			
 			game_Layer.addChild(player1);
 			game_Layer.addChild(player2);
-			addChild(ball);
+			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, KeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, KeyReleased);
-			
-			var field:Sprite = new Sprite();
-			field.graphics.lineStyle(5, 0, 0.3);
-			field.graphics.drawCircle(centerPoint.x, centerPoint.y, fieldRadius);
-			graphics.lineStyle(5, 0xff0000);
-			field.graphics.drawCircle(centerPoint.x, centerPoint.y, 5);
-			addChild(field);
-			Debug.test(function():void { hitDraw = new Sprite(); addChild(hitDraw); },Debug.Kit_bounce);
+			Debug.test(function():void {
+				addChild(ball);
+				var field:Sprite = new Sprite();
+				field.graphics.lineStyle(5, 0, 0.3);
+				field.graphics.drawCircle(centerPoint.x, centerPoint.y, fieldRadius);
+				graphics.lineStyle(5, 0xff0000);
+				field.graphics.drawCircle(centerPoint.x, centerPoint.y, 5);
+				addChild(field);
+				hitDraw = new Sprite(); addChild(hitDraw); },
+			Debug.Kit_Draw_Objects);
 			Debug.test(function():void { status = new Stats(); addChild(status); }, Debug.ALL);
 		}
 		

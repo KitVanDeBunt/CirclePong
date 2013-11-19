@@ -1,6 +1,7 @@
 package  
 {
 	import flash.display.Sprite;
+	import utils.debug.Debug;
 	/**
 	 * ...
 	 * @author Fabian Verkuijlen
@@ -13,7 +14,7 @@ package
 		{
 			addChild(player2);
 			player2.x += fieldRadius;
-			player2.addChild(drawShield(shieldRadius));
+			Debug.test(function():void { player2.addChild(drawShield(shieldRadius)); },Debug.Kit_Draw_Objects);
 		}
 		
 	}

@@ -97,7 +97,7 @@ package utils.bitmap
 											yP, 
 											Random.rangePosNum(maxSpeed,maxSpeed), 
 											systemRotation + Random.rangePosNum( -0.3, 0.3) ,
-											20 * Math.random() + 15,
+											25 * Math.random() + 25,
 											0.99,
 											scaleX,
 											Random.rangePosNum( -10, 10)

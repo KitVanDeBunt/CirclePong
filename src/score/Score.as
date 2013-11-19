@@ -14,7 +14,7 @@ package score
 		
 		private var ui:UI = new UI();
 		private var ticks:int;
-		private var startTime:int = 60;
+		private var startTime:int = 120;
 		
 		static public const ENDGAME:String = "endgame";
 		
@@ -42,15 +42,11 @@ package score
 				{
 					if (scorePlayer1 == scorePlayer2)
 				{
-					trace("begin function")
 					Main.winningPlayer1 = false;
 					Main.winningPlayer2 = false;
 				}else if (scorePlayer1 > scorePlayer2) {
-					trace("begin function1")
 					Main.winningPlayer1 = true;
 				}else {
-					trace("begin function2")
-					
 					Main.winningPlayer2 = true;
 				}
 				dispatchEvent(new Event(ENDGAME));
@@ -66,8 +62,6 @@ package score
 			//dit maakt het string 
 			ui.Score2.ScorePlayer2.text = String(scorePlayer2);
 			ui.Score1.ScorePlayer1.text = String(scorePlayer1);
-			//trace(scorePlayer1);
-			//trace(scorePlayer2);
 		}
 		
 	}

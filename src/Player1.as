@@ -1,7 +1,7 @@
 package  
 {
 	import flash.display.Sprite;
-	import flash.geom.Point;
+	import utils.debug.Debug;
 	/**
 	 * ...
 	 * @author Fabian Verkuijlen
@@ -15,7 +15,7 @@ package
 		{
 			addChild(player1);
 			player1.x += fieldRadius;
-			player1.addChild(drawShield(shieldRadius));
+			Debug.test(function():void { player1.addChild(drawShield(shieldRadius)); },Debug.Kit_Draw_Objects);
 		}
 		
 	}

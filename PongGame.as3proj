@@ -52,7 +52,7 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="lib\Library3.swc" />
+    <element path="lib\Library2.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

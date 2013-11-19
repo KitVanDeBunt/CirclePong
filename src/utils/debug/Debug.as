@@ -28,7 +28,8 @@ package utils.debug
 		public static const Fabian:String = "fabian";
 		public static const ALL:String = "all";
 		private static const OFF:String = "off";
-		private static var USER:Vector.<String> = new <String>[Kit,ALL]; //enter all user u want to print for
+		//private static var USER:Vector.<String> = new <String>[Kit,ALL,Kit_Draw_Objects,Kit_bounce];
+		private static var USER:Vector.<String> = new <String>[OFF]; //enter all user u want to print for
 		
 		public static function test(func:Function,user:String):Function 
 		{
